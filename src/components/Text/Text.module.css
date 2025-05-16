@@ -1,0 +1,28 @@
+.text {
+  font-size: var(--font-medium);
+  font-weight: 700;
+
+  text-align: start;
+}
+.end {
+  composes: text;
+  text-align: end;
+}
+.center {
+  composes: text;
+  text-align: center;
+}
+.justify {
+  composes: text;
+  text-align: justify;
+}
+
+.marginBottom10 {
+  margin-bottom: 10px;
+}
+.marginBottom20 {
+  margin-bottom: 20px;
+}
+.marginBottom0 {
+  margin-bottom: 0;
+}
