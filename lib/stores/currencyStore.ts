@@ -1,0 +1,1 @@
+// lib\stores\currencyStore.ts
