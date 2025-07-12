@@ -20,18 +20,6 @@ export default function GeolocationChecker() {
     const error = () => {};
 
     navigator.geolocation.getCurrentPosition(success, error, options);
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-
-        const data = await getUserInfo({ latitude, longitude });
-        console.log(data.results[0].annotations.currency.iso_code);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
   }, []);
 
   return null;
