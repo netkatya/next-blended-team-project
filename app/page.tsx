@@ -6,6 +6,9 @@ import Heading from '@/components/Heading/Heading';
 
 import css from './page.module.css';
 
+//my
+import GeolocationChecker from '@/components/GeolocationChecker/GeolocationChecker';
+
 export default function Home() {
   const isError = false;
 
@@ -13,6 +16,7 @@ export default function Home() {
     <main className={css.main}>
       <Section>
         <Container>
+          <GeolocationChecker />
           <Heading info title="What currencies do you want to exchange?🙂" />
 
           {isError && (
