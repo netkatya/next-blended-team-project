@@ -5,8 +5,11 @@ import { MdCurrencyExchange } from 'react-icons/md';
 import { usePathname } from 'next/navigation';
 // store
 import useCurrencyStore from '@/lib/stores/currencyStore';
+// Components
+import SelectRates from '@/components/SelectRates/SelectRates';
 // styles
 import styles from './Header.module.css';
+
 
 export default function Header() {
   const pathname = usePathname();
@@ -32,7 +35,8 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* ✔ Add base currency here !!! */}
+      {baseCurrency && <SelectRates baseCurrency={baseCurrency} setBaseCurrency={setBaseCurrency} />}
+
       {baseCurrency ? (
         <p className={styles.text}> Your base currency: {baseCurrency}</p>
       ) : (
