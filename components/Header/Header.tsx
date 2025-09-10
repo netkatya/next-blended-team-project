@@ -34,9 +34,9 @@ export default function Header() {
 
       {/* ✔ Add base currency here !!! */}
       {baseCurrency ? (
-        <p> Your base currency: {baseCurrency}</p>
+        <p className={styles.text}> Your base currency: {baseCurrency}</p>
       ) : (
-        <p>Detecting your currency...</p>
+        <p className={styles.text}>Detecting your currency...</p>
       )}
     </header>
   );
