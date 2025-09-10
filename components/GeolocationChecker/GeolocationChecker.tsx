@@ -7,31 +7,29 @@ import { getUserInfo } from '@/lib/service/opencagedataApi';
 import useCurrencyStore from '@/lib/stores/currencyStore';
 
 export default function GeolocationChecker() {
-  const { currency, isHydrated, setCurrency } = useCurrencyStore();
+  const { baseCurrency, hasHydrated, setBaseCurrency } = useCurrencyStore();
 
   useEffect(() => {
-    if (isHydrated && !currency) {
-      const options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0,
-      };
+    if (!hasHydrated || baseCurrency) return;
 
-      const success = async ({ coords }: GeolocationPosition) => {
-        const data = await getUserInfo(coords);
-        const currencyCode = data.results[0].annotations.currency.iso_code;
-        setCurrency(currencyCode);
-      };
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
 
-      const error = () => {
-        console.warn('GeolocationPosition ERROR');
-      };
+    const success = async ({ coords }: GeolocationPosition) => {
+      const data = await getUserInfo(coords);
+      const currencyCode = data.results[0].annotations.currency.iso_code;
+      setBaseCurrency(currencyCode);
+    };
 
-      navigator.geolocation.getCurrentPosition(success, error, options);
-    }
-  }, [isHydrated, currency]);
+    const error = () => {
+      setBaseCurrency('USD');
+    };
 
-  return (
-    <div>{currency ? <p>Your currency is: {currency}</p> : <p>Detecting your currency...</p>}</div>
-  );
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  }, [hasHydrated, baseCurrency]);
+
+  return null;
 }

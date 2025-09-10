@@ -5,24 +5,27 @@ import { persist } from 'zustand/middleware';
 
 type Currency = string;
 
-type CurrencyStore = {
-  currency: Currency | undefined;
-  setCurrency: (newCurrency: Currency) => void;
-  isHydrated: boolean;
+type CurrencyState = {
+  baseCurrency: Currency | undefined;
+  setBaseCurrency: (newCurrency: Currency) => void;
+  hasHydrated: boolean;
   setHydrated: (state: boolean) => void;
 };
 
-const useCurrencyStore = create<CurrencyStore>()(
+const useCurrencyStore = create<CurrencyState>()(
   persist(
     (set) => ({
-      currency: undefined,
-      isHydrated: false,
-      setCurrency: (newCurrency: Currency) => set({ currency: newCurrency }),
-      setHydrated: (state: boolean) => set({ isHydrated: state }),
+      baseCurrency: undefined,
+      hasHydrated: false,
+      setBaseCurrency: (newCurrency: Currency) => set({ baseCurrency: newCurrency }),
+      setHydrated: (state: boolean) => set({ hasHydrated: state }),
     }),
     {
-      name: 'app-currency',
-      onRehydrateStorage: () => (state) => state?.setHydrated(true),
+      name: 'currency-storage',
+      partialize: (state) => ({ baseCurrency: state.baseCurrency }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated(true);
+      },
     }
   )
 );
