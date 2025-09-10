@@ -29,7 +29,7 @@ export default function GeolocationChecker() {
     };
 
     navigator.geolocation.getCurrentPosition(success, error, options);
-  }, [hasHydrated, baseCurrency]);
+  }, [hasHydrated, baseCurrency, setBaseCurrency]);
 
   return null;
 }
