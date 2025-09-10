@@ -2,19 +2,19 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   flex: 1 0 0;
 }
 
-.container {
+/* .container {
   display: flex;
-  min-width: 1200px;
+  max-width: 100%;
   padding: 40px 0px 80px 80px;
   flex-direction: column;
   align-items: flex-start;
   gap: 40px;
   flex: 1 0 0;
-}
+} */
 
 .title {
   color: #fff;
