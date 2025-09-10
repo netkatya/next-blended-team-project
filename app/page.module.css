@@ -8,7 +8,7 @@
 
 .container {
   display: flex;
-  width: 700px;
+  min-width: 1200px;
   padding: 40px 0px 80px 80px;
   flex-direction: column;
   align-items: flex-start;
@@ -16,7 +16,7 @@
   flex: 1 0 0;
 }
 
-/* .title {
+.title {
   color: #fff;
   font-family: Knewave;
   font-size: 64px;
@@ -32,4 +32,4 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-} */
+}
