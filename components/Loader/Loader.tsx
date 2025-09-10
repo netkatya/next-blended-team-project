@@ -11,10 +11,10 @@ export default function Loader() {
           <span></span>
         </div>
         <div className={style.loader}>
-          <i></i>
+          <div className={style.dot}></div>
         </div>
         <div className={style.loader}>
-          <i></i>
+          <div className={style.dot}></div>
         </div>
       </div>
     </div>

@@ -67,7 +67,7 @@
   filter: blur(0.65px);
 }
 
-i {
+.dot {
   position: absolute;
   top: 0px;
   left: 50%;
