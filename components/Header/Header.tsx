@@ -1,13 +1,16 @@
 'use client';
-
+// react & next
 import Link from 'next/link';
 import { MdCurrencyExchange } from 'react-icons/md';
 import { usePathname } from 'next/navigation';
-
+// store
+import useCurrencyStore from '@/lib/stores/currencyStore';
+// styles
 import styles from './Header.module.css';
 
 export default function Header() {
   const pathname = usePathname();
+  const { baseCurrency, hasHydrated, setBaseCurrency } = useCurrencyStore();
 
   return (
     <header className={styles.header}>
@@ -30,6 +33,11 @@ export default function Header() {
       </div>
 
       {/* ✔ Add base currency here !!! */}
+      {baseCurrency ? (
+        <p> Your base currency: {baseCurrency}</p>
+      ) : (
+        <p>Detecting your currency...</p>
+      )}
     </header>
   );
 }

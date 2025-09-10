@@ -10,6 +10,9 @@ import { useExchangeStore } from '@/lib/stores/exchangeStore';
 import ExchangeInfo from '@/components/ExchangeInfo/ExchangeInfo';
 import Loader from '@/components/Loader/Loader';
 
+//my
+import GeolocationChecker from '@/components/GeolocationChecker/GeolocationChecker';
+
 export default function Home() {
   const { exchangeInfo, isLoading, isError, convert } = useExchangeStore();
 
@@ -18,7 +21,7 @@ export default function Home() {
       <Section>
         <Container>
           <Heading info title="What currencies do you want to exchange?" />
-
+          <GeolocationChecker />
           {isError && (
             <Heading error title="Something went wrong... Check the data validity and try again!" />
           )}
