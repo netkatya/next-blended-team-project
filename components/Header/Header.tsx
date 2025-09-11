@@ -13,7 +13,7 @@ import styles from './Header.module.css';
 
 export default function Header() {
   const pathname = usePathname();
-  const { baseCurrency, hasHydrated, setBaseCurrency } = useCurrencyStore();
+  const { baseCurrency, setBaseCurrency } = useCurrencyStore();
 
   return (
     <header className={styles.header}>
