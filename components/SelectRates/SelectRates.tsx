@@ -1,6 +1,8 @@
+'use client';
+
 // react
 import Select, { SingleValue } from 'react-select';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // libraries
 import symbols from './symbols.json';
 // styles
@@ -14,16 +16,26 @@ type OptionType = {
 
 interface SelectRatesProps {
   baseCurrency: string;
-  // ✔ Add setBaseCurrency prop here !!!
-  setBaseCurrency?: (currency: string) => void;
+  setBaseCurrency: (currency: string) => void;
 }
 
 export default function SelectRates({ baseCurrency, setBaseCurrency }: SelectRatesProps) {
-  const [selectedOption, setSelectedOption] = useState<SingleValue<OptionType>>(null);
+  const [selectedOption, setSelectedOption] = useState<SingleValue<OptionType>>({value: baseCurrency, label: baseCurrency});
+
+  useEffect(() => {
+    setSelectedOption({
+      value: baseCurrency,
+      label: baseCurrency
+    });
+  }, [baseCurrency]);
 
   const handleChange = (selectedOption: SingleValue<OptionType>) => {
     setSelectedOption(selectedOption);
-    console.log(`Option selected:`, selectedOption);
+    if (selectedOption) {
+      setBaseCurrency(selectedOption.value);
+      console.log(`Currency changed to:`, selectedOption.value);
+    }
+    
   };
 
   return (
@@ -40,6 +52,7 @@ export default function SelectRates({ baseCurrency, setBaseCurrency }: SelectRat
         onChange={handleChange}
         options={symbols}
         isSearchable
+        placeholder="Select currency..."
       />
     </div>
   );

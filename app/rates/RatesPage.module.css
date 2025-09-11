@@ -1,0 +1,28 @@
+.main {
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.noData {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.1rem;
+  color: #888;
+}
+
+.ratesContainer {
+  margin-top: 2rem;
+}
+
+.error {
+  color: #d32f2f;
+  text-align: center;
+  margin: 2rem 0;
+}

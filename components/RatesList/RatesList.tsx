@@ -3,7 +3,11 @@ import GridItem from '../GridItem/GridItem';
 
 import styles from './RatesList.module.css';
 
-export default function RatesList({ rates }) {
+interface RatesListProps {
+  rates: { key: string; value: string }[];
+}
+
+export default function RatesList({ rates }: RatesListProps) {
   return (
     <Grid>
       {rates.map(({ key, value }) => (
