@@ -1,0 +1,31 @@
+.rainContainer {
+    position: fixed;
+    top: -20;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.currency {
+    position: absolute;
+    top: -30px;
+    font-size: 2.8rem;
+    opacity: 0.25;
+    animation: fall linear infinite;
+    color: gold;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) scale(0.9);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(100vh) scale(0.9);
+        opacity: 0;
+    }
+}

@@ -61,4 +61,9 @@
 .icon {
   width: 24px;
   height: 24px;
+  transition: rotate 500ms ease-in-out;
+}
+
+.form:focus-within .icon {
+  rotate: 360deg;
 }
