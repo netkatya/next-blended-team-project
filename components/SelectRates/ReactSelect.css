@@ -21,7 +21,7 @@ div .react-select__single-value {
 }
 
 div .react-select__menu {
-  background-color: transparent;
+  background-color: #2c5364;
 }
 
 .react-select__menu .react-select__option--is-focused {
