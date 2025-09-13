@@ -2,59 +2,89 @@
 
 'use client';
 
-import { useEffect } from 'react';
 import { Wave } from 'react-animated-text';
 
 import Container from '@/components/Container/Container';
 import Section from '@/components/Section/Section';
 import Heading from '@/components/Heading/Heading';
-import RatesList from '@/components/RatesList/RatesList';
+import { latestRates } from '@/lib/service/exchangeAPI';
 import Filter from '@/components/Filter/Filter';
 import { useExchangeStore } from '@/lib/stores/exchangeStore';
-import useCurrencyStore from '@/lib/stores/currencyStore';
-
 import css from './RatesPage.module.css';
+import RatesList from '@/components/RatesList/RatesList';
+import useCurrencyStore from '@/lib/stores/currencyStore';
+import { useEffect, useState } from 'react';
+
+type Rate = [string, number];
 
 export default function RatesPage() {
-  const { rates, isLoading, isError, fetchRates, setFilter } = useExchangeStore();
-  const { baseCurrency } = useCurrencyStore();
+  const [isLoading, setIsLoading] = useState(true);
+  const { baseCurrency, hasHydrated, rates, setRates, isError, setIsError } = useCurrencyStore();
 
   useEffect(() => {
+    async function fetchRates() {
+      if (!baseCurrency) return;
+      try {
+        setIsLoading(true);
+        const rates = await latestRates(baseCurrency);
+        if (setRates) {
+          setRates(rates);
+          setIsError(false);
+        }
+      } catch (error) {
+        console.error('Error fetching rates:', error);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }
     fetchRates();
-  }, [fetchRates, baseCurrency]);
+  }, [baseCurrency]);
+
+  if (!hasHydrated) return null;
+
+  const filteredRates = rates
+    .filter(([key]) => key !== baseCurrency)
+    .map(([key, value]) => ({ key, value: (1 / Number(value)).toFixed(2) }));
 
   return (
     <main className={css.main}>
       <Section>
         <Container>
           <Heading
-            info
-            bottom
             title={
-              <Wave
-                text={`$ $ $ Current exchange rate for 1 ${'UAH'} $ $ $`}
-                effect="fadeOut"
-                effectChange={4.0}
-              />
+              hasHydrated && (
+                <Wave
+                  text={`$ $ $ Current exchange rate for 1 ${baseCurrency || 'UAH'} $ $ $`}
+                  effect="fadeOut"
+                  effectChange={4.0}
+                />
+              )
             }
           />
+          {isLoading ? (
+            <Heading title="Loading rates..." />
+          ) : (
+            <>
+              {filteredRates.length > 0 && <RatesList rates={filteredRates} />}
+              {/* <Filter setFilter={setFilter} /> */}
 
-          <Filter setFilter={setFilter} />
+              {/* Loading status */}
+              {isLoading && (
+                <div className={css.loading}>
+                  <p>Loading rates...</p>
+                </div>
+              )}
 
-          {/* Loading status */}
-          {isLoading && (
-            <div className={css.loading}>
-              <p>Loading rates...</p>
-            </div>
-          )}
-
-          {/* Error */}
-          {isError && (
-            <Heading error title="Something went wrong...😐 We cannot show current rates!" />
+              {/* Error */}
+              {isError && (
+                <Heading title="Something went wrong...😐 We cannot show current rates!" />
+              )}
+            </>
           )}
 
           {/* Rates list */}
-          {!isLoading && !isError && <RatesList rates={rates}/>}
+          {!isLoading && !isError && <RatesList rates={filteredRates} />}
         </Container>
       </Section>
     </main>

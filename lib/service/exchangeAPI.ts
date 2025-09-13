@@ -1,3 +1,4 @@
+import { Rate } from '@/types/exchangeState';
 import axios from 'axios';
 
 const apiKey = process.env.NEXT_PUBLIC_API_LAYER_API_KEY_4;
@@ -9,8 +10,8 @@ const apiKey = process.env.NEXT_PUBLIC_API_LAYER_API_KEY_4;
 // }
 
 const instance = axios.create({
-  baseURL: 'https://api.apilayer.com/exchangerates_data/',
-  headers: { apiKey: apiKey },
+  baseURL: 'https://api.apilayer.com/exchangerates_data',
+  headers: { apikey: apiKey ?? '' },
 });
 
 // async function axiosGetWithFailover(url: string, params: Record<string, unknown>) {
@@ -58,5 +59,5 @@ export const exchangeCurrency = async (credentials: ConvertCredentials) => {
 
 export const latestRates = async (baseCurrency: string) => {
   const { data } = await instance('/latest', { params: { base: baseCurrency } });
-  return Object.entries(data.rates);
+  return Object.entries(data.rates as Rate);
 };
