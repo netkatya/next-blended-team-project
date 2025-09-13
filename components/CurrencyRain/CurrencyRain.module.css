@@ -1,6 +1,6 @@
 .rainContainer {
     position: fixed;
-    top: -20;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
@@ -11,7 +11,7 @@
 
 .currency {
     position: absolute;
-    top: -30px;
+    top: -80px;
     font-size: 2.8rem;
     opacity: 0.25;
     animation: fall linear infinite;
