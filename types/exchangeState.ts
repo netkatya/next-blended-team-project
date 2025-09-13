@@ -19,6 +19,7 @@ export type ExchangeState = {
   isError: boolean;
   filter: string;
   setBaseCurrency: (currency: string) => void;
+  setFilter: (value: string) => void;
   convert: (data: { from: string; to: string; amount: number }) => Promise<void>;
   fetchRates: () => Promise<void>;
 };
