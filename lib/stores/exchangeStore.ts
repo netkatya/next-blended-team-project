@@ -14,19 +14,21 @@ export const useExchangeStore = create<ExchangeState>((set, get) => ({
   setFilter: (value: string) => set({ filter: value }),
 
   convert: async (credentials) => {
+    set({ isLoading: true, isError: false });
     try {
-      set({ isLoading: true, isError: false });
       const data = await exchangeCurrency(credentials);
       set({ exchangeInfo: data, isLoading: false });
     } catch (err) {
       console.error(err);
       set({ isError: true, isLoading: false, exchangeInfo: null });
+    } finally {
+      set({ isLoading: false });
     }
   },
   fetchRates: async () => {
     const baseCurrency = get().baseCurrency || 'USD';
+    set({ isLoading: true, isError: false });
     try {
-      set({ isLoading: true, isError: false });
       const rates = (await latestRates(baseCurrency)) as [string, number][];
       const filter = get().filter;
 
@@ -40,7 +42,9 @@ export const useExchangeStore = create<ExchangeState>((set, get) => ({
       set({ rates: filtered, isLoading: false });
     } catch (err) {
       console.error(err);
-      set({ isError: true, isLoading: false });
+      set({ isError: true });
+    } finally {
+      set({ isLoading: false });
     }
   },
 }));
