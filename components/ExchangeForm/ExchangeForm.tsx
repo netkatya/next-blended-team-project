@@ -3,7 +3,7 @@
 import { RiExchangeDollarFill } from 'react-icons/ri';
 
 import styles from './ExchangeForm.module.css';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 type ExchangeFormProps = {
   onSubmit: (data: { from: string; to: string; amount: number }) => void;
@@ -12,7 +12,7 @@ type ExchangeFormProps = {
 export default function ExchangeForm({ onSubmit }: ExchangeFormProps) {
   const [input, setInput] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const regex = /^\d+(\.\d{1,2})?\s[a-zA-Z]{3}\sin\s[a-zA-Z]{3}$/;
