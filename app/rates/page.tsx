@@ -15,11 +15,12 @@ import RatesList from '@/components/RatesList/RatesList';
 import useCurrencyStore from '@/lib/stores/currencyStore';
 import { useEffect, useState } from 'react';
 
-type Rate = [string, number];
+// type Rate = [string, number];
 
 export default function RatesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const { baseCurrency, hasHydrated, rates, setRates, isError, setIsError } = useCurrencyStore();
+  const { filter, setFilter } = useExchangeStore();
 
   useEffect(() => {
     async function fetchRates() {
@@ -44,7 +45,7 @@ export default function RatesPage() {
   if (!hasHydrated) return null;
 
   const filteredRates = rates
-    .filter(([key]) => key !== baseCurrency)
+    .filter(([key]) => key !== baseCurrency && key.toLowerCase().includes(filter.toLowerCase()))
     .map(([key, value]) => ({ key, value: (1 / Number(value)).toFixed(2) }));
 
   return (
@@ -66,8 +67,7 @@ export default function RatesPage() {
             <Heading title="Loading rates..." />
           ) : (
             <>
-              {filteredRates.length > 0 && <RatesList rates={filteredRates} />}
-              {/* <Filter setFilter={setFilter} /> */}
+              <Filter setFilter={setFilter} />
 
               {/* Loading status */}
               {isLoading && (
@@ -84,7 +84,9 @@ export default function RatesPage() {
           )}
 
           {/* Rates list */}
-          {!isLoading && !isError && <RatesList rates={filteredRates} />}
+          {!isLoading && !isError && filteredRates.length > 0 && (
+            <RatesList rates={filteredRates} />
+          )}
         </Container>
       </Section>
     </main>
