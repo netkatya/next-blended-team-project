@@ -1,3 +1,4 @@
+import { useDebouncedCallback } from 'use-debounce';
 import styles from './Filter.module.css';
 
 interface FilterProps {
@@ -5,9 +6,16 @@ interface FilterProps {
 }
 
 export default function Filter({ setFilter }: FilterProps) {
+  const setDebouncedFilter = useDebouncedCallback((filter: string) => {
+    setFilter(filter);
+  }, 300);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDebouncedFilter((e.target as HTMLInputElement).value);
+  };
   return (
     <input
-      onChange={(e) => setFilter((e.target as HTMLInputElement).value)}
+      onChange={handleOnChange}
       type="text"
       placeholder="What currency are you looking for?"
       className={styles.input}
