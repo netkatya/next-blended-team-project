@@ -10,7 +10,6 @@ import SelectRates from '@/components/SelectRates/SelectRates';
 // styles
 import styles from './Header.module.css';
 
-
 export default function Header() {
   const pathname = usePathname();
   const { baseCurrency, setBaseCurrency } = useCurrencyStore();
@@ -35,10 +34,8 @@ export default function Header() {
         </nav>
       </div>
 
-      {baseCurrency && <SelectRates baseCurrency={baseCurrency} setBaseCurrency={setBaseCurrency} />}
-
       {baseCurrency ? (
-        <p> Your base currency: {baseCurrency}</p>
+        <SelectRates baseCurrency={baseCurrency} setBaseCurrency={setBaseCurrency} />
       ) : (
         <p>Detecting your currency...</p>
       )}
