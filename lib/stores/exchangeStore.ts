@@ -29,14 +29,14 @@ export const useExchangeStore = create<ExchangeState>((set, get) => ({
     const baseCurrency = get().baseCurrency || 'USD';
     set({ isLoading: true, isError: false });
     try {
-      const rates = (await latestRates(baseCurrency)) as [string, number][];
+      const rates = (await latestRates(baseCurrency)) as [string, string][];
       const filter = get().filter;
 
       const filtered = rates
         .filter(([key]) => key !== baseCurrency && key.toLowerCase().includes(filter.toLowerCase()))
         .map(([key, value]) => ({
           key,
-          value: (1 / value).toFixed(2),
+          value: (1 / Number(value)).toFixed(2),
         }));
 
       set({ rates: filtered, isLoading: false });

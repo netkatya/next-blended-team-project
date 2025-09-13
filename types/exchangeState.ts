@@ -14,7 +14,7 @@ export type Rate = {
 export type ExchangeState = {
   baseCurrency: string;
   exchangeInfo: ExchangeInfo | null;
-  rates: { key: string; value: string }[];
+  rates: Rate[];
   isLoading: boolean;
   isError: boolean;
   filter: string;

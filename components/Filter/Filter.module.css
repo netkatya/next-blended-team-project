@@ -23,6 +23,7 @@
 
   border-radius: 4px;
   background-color: var(--color-gray);
+  margin-top: 40px;
 }
 
 .input::placeholder {
